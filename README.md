@@ -8,6 +8,8 @@ Run in console:
 
 echo "zabbix ALL=NOPASSWD: /usr/sbin/birdc" >> /etc/sudoers.d/zabbix;
 
+usermod -a -G bird zabbix;
+
 chmod +x /etc/zabbix/scripts/bird_mon.sh;
 
 systemctl restart zabbix-agent2
