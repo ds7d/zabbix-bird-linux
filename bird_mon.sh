@@ -28,18 +28,19 @@ case $1 in
             
             PEER="$2"
             
-            TTL_TIME="$(date +%s -d "120 seconds ago")"
+#            TTL_TIME="$(date +%s -d "120 seconds ago")"
             
-            CACHE_FILE="/var/run/zabbix/birdlink.cache"
-            test -s "${CACHE_FILE}" &&
-              CACHE_TIME="$(date +%s -r "${CACHE_FILE}")" || CACHE_TIME=0
+#            CACHE_FILE="/var/run/zabbix/birdlink.cache"
+#            test -s "${CACHE_FILE}" &&
+#              CACHE_TIME="$(date +%s -r "${CACHE_FILE}")" || CACHE_TIME=0
             
-            test "${CACHE_TIME}" -le "${TTL_TIME}" &&
-              sudo birdc show proto > "${CACHE_FILE}.new" &&
-              mv "${CACHE_FILE}.new" "${CACHE_FILE}" &&
-              chown zabbix "${CACHE_FILE}"
-            
-            awk '$1 == "'$PEER'" { print $6 }' "$CACHE_FILE"
+#            test "${CACHE_TIME}" -le "${TTL_TIME}" &&
+#              sudo birdc show proto > "${CACHE_FILE}.new" &&
+#              mv "${CACHE_FILE}.new" "${CACHE_FILE}" &&
+#              chown zabbix "${CACHE_FILE}"
+# echo "None"           
+#            awk '$1 == "'$PEER'" { print $6 }' "$CACHE_FILE"
+            birdc show proto | awk '$1 == "'$PEER'" { print $6 }' 
     ;;
 
 esac
