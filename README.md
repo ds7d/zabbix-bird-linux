@@ -4,7 +4,7 @@ Put bird_mon.sh to /etc/zabbix/scripts/ and userparameter_bird_mon.conf to /etc/
 
 Run in console:
 
-echo "zabbix ALL=NOPASSWD: /usr/sbin/birdc" >> /etc/sudoers.d/zabbix
+echo "zabbix ALL=NOPASSWD: /usr/sbin/birdc" >> /etc/sudoers.d/zabbix;
 chmod +x /etc/zabbix/scripts/bird_mon.sh
 
 
