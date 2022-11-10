@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>6.2</version>
+    <date>2022-11-10T13:33:35Z</date>
+    <template_groups>
+        <template_group>
+            <name>Templates_Custom</name>
+        </template_group>
+    </template_groups>
+    <templates>
+        <template>
+            <template>BIRD BGP</template>
+            <name>BIRD BGP</name>
+            <groups>
+                <group>
+                    <name>Templates_Custom</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <name>diff config and birdc output</name>
+                    <key>bird_mon[diff_config_birdc]</key>
+                    <delay>1</delay>
+                    <trends>0</trends>
+                    <value_type>CHAR</value_type>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>BIRD BGP monitoring</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <expression>last(/BIRD BGP/bird_mon[diff_config_birdc]) &gt; 0</expression>
+                            <name>Not all BGP protocols in Bird is up at {HOSTNAME}</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>BGP session</name>
+                    <key>bird_mon[get_peers]</key>
+                    <delay>30</delay>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>link on {#PEERNAME}</name>
+                            <key>bird_mon[link_status,{#PEERNAME}]</key>
+                            <delay>1</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>BIRD BGP monitoring</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>find(/BIRD BGP/bird_mon[link_status,{#PEERNAME}],1s,&quot;like&quot;,&quot;Established&quot;)=0</expression>
+                                    <name>The link {#PEERNAME} isn't Established at {HOSTNAME}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                    <lld_macro_paths>
+                        <lld_macro_path>
+                            <lld_macro>{#PEERNAME}</lld_macro>
+                            <path>$.peer_name</path>
+                        </lld_macro_path>
+                    </lld_macro_paths>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.data</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+    </templates>
+</zabbix_export>
