@@ -18,4 +18,4 @@ systemctl restart zabbix-agent2
 ###########################
 
 
-Import zbx_bird_template.xml to Zabbix
+Import zbx_export_templates.json to Zabbix
