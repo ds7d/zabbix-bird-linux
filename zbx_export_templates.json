@@ -1,7 +1,7 @@
 {
     "zabbix_export": {
         "version": "6.2",
-        "date": "2022-11-10T13:55:35Z",
+        "date": "2022-11-11T08:26:07Z",
         "template_groups": [
             {
                 "name": "Templates_Custom"
@@ -56,7 +56,7 @@
                                 ],
                                 "trigger_prototypes": [
                                     {
-                                        "expression": "find(/BIRD BGP/bird_mon[link_status,{#PEERNAME}],1s,\"like\",\"Established\")=0",
+                                        "expression": "find(/BIRD BGP/bird_mon[link_status,{#PEERNAME}],1m,\"like\",\"Established\")=0",
                                         "name": "The BIRD link {#PEERNAME} isn't Established at {HOSTNAME}",
                                         "priority": "HIGH"
                                     }
