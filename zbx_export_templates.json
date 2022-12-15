@@ -30,7 +30,7 @@
                         ],
                         "triggers": [
                             {
-                                "expression": "last(/BIRD BGP/bird_mon[diff_config_birdc]) > 0",
+                                "expression": "last(/BIRD BGP/bird_mon[diff_config_birdc]) <> 0",
                                 "name": "Not all BGP protocols in Bird is up at {HOSTNAME}",
                                 "priority": "HIGH"
                             }
